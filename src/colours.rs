@@ -1,5 +1,5 @@
 #[non_exhaustive]
-struct Colours;
+pub struct Colours;
 
 impl Colours {
     pub const RED: u32 = 0xFF0000;

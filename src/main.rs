@@ -1,9 +1,12 @@
 use minifb::{Key, Window, WindowOptions};
+mod point;
+mod colours;
+use crate::point::Point;
+use crate::colours::Colours;
 
 const WIDTH: usize= 640;
 const HEIGHT: usize = 360;
-mod point;
-use crate::Point;
+
 
 fn main() {
     let mut buffer: Vec<u32> = vec![0; WIDTH * HEIGHT];
@@ -27,21 +30,23 @@ fn main() {
 
     while window.is_open() && !window.is_key_down(Key::Escape) {
         
-        
+        if window.is_key_down(Key::W) {
+            draw_rect(&mut buffer, Point::new(40, 40), 0xFF0000)
+        }        
 
         window.update_with_buffer(&buffer, WIDTH, HEIGHT).unwrap()
     }
 }
 
 
-fn colour_point(buffer: &mut Vec<u32>, x: u32, y: u32, colour: u32) {
-    buffer[(x + (WIDTH as u32 * y)) as usize] = colour;
+fn colour_point(buffer: &mut Vec<u32>, point: Point, colour: u32) {
+    buffer[((point.x) as u32 + (WIDTH as u32 * (point.y) as u32)) as usize] = colour;
 }
 
-fn draw_square(buffer: &mut Vec<u32>, x: u32, ) {
-    for delta_x in 0..10 {
-        for delta_y in 0..10 {
-            colour_point(&mut buffer, delta_x, delta_y, 0x00FF00)
+fn draw_rect(buffer: &mut Vec<u32>, point: Point, colour: u32) {
+    for length in 0..10 {
+        for height in 0..10 {
+            colour_point(buffer, Point {x: length, y: height }, colour)
         }
     }
 
