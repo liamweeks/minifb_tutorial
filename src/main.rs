@@ -9,7 +9,7 @@ const HEIGHT: usize = 360;
 
 
 fn main() {
-    let mut buffer: Vec<u32> = vec![0; WIDTH * HEIGHT];
+    let mut engine: RenderMan = RenderMan::new();
 
     let mut window = Window::new(
         "Test - ESC to exit",
@@ -31,23 +31,40 @@ fn main() {
     while window.is_open() && !window.is_key_down(Key::Escape) {
         
         if window.is_key_down(Key::W) {
-            draw_rect(&mut buffer, Point::new(40, 40), 0xFF0000)
+            engine.draw_rect(Point::new(40, 40), 0xFF0000)
         }        
 
-        window.update_with_buffer(&buffer, WIDTH, HEIGHT).unwrap()
+        window.update_with_buffer(&engine.buffer, WIDTH, HEIGHT).unwrap()
     }
 }
 
 
-fn colour_point(buffer: &mut Vec<u32>, point: Point, colour: u32) {
-    buffer[((point.x) as u32 + (WIDTH as u32 * (point.y) as u32)) as usize] = colour;
+
+
+pub struct RenderMan {
+    pub buffer: Vec<u32>
 }
 
-fn draw_rect(buffer: &mut Vec<u32>, point: Point, colour: u32) {
-    for length in 0..10 {
-        for height in 0..10 {
-            colour_point(buffer, Point {x: length, y: height }, colour)
+impl RenderMan {
+    pub fn colour_point(&mut self, point: Point, colour: u32) {
+        self.buffer[((point.x) as u32 + (WIDTH as u32 * (point.y) as u32)) as usize] = colour;
+    }
+
+    pub fn draw_rect(&mut self, dimensions: Point, colour: u32) {
+        for length in 0..dimensions.x {
+            for height in 0..dimensions.y {
+                self.colour_point(Point {x: length, y: height }, colour)
+            }
         }
+    
     }
 
+    pub fn new() -> Self {
+        let buffer: Vec<u32> = vec![0; WIDTH * HEIGHT];
+
+        return Self {
+            buffer
+        };
+    }
+    
 }
