@@ -7,6 +7,15 @@ pub struct RenderMan {
 }
 
 impl RenderMan {
+
+    pub fn new() -> Self {
+        let buffer: Vec<u32> = vec![0; WIDTH * HEIGHT];
+
+        return Self {
+            buffer
+        };
+    }
+    
     pub fn colour_point(&mut self, point: Point, colour: u32) {
         self.buffer[((point.x) as u32 + (WIDTH as u32 * (point.y) as u32)) as usize] = colour;
     }
@@ -20,13 +29,6 @@ impl RenderMan {
     
     }
 
-    pub fn new() -> Self {
-        let buffer: Vec<u32> = vec![0; WIDTH * HEIGHT];
-
-        return Self {
-            buffer
-        };
-    }
 
     pub fn set_background(&mut self, colour: &u32) {
         for mut pixel in 0..self.buffer.len() {
