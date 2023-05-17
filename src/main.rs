@@ -32,6 +32,9 @@ fn main() {
     // 60 fps cap
     // window.limit_update_rate(Some(std::time::Duration::from_micros(16600)));
 
+    let offset_x = 0;
+    let offset_y = 0;
+
 
 
 
@@ -39,7 +42,7 @@ fn main() {
 
         
         if window.is_key_down(Key::W) {
-            engine.draw_rect(Point::new(40, 40), colours.blue);
+            engine.draw_rect(Point::new(20, 20), Point::new(40, 40), colours.blue);
         } else if window.is_key_down(Key::B) {
             engine.set_background(&colours.green);
         }
