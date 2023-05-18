@@ -17,17 +17,29 @@ impl RenderMan {
     }
 
     pub fn colour_point(&mut self, point: Point, colour: u32) {
-        self.buffer[((point.x) as u32 + (WIDTH as u32 * (point.y) as u32)) as usize] = colour;
+
+        let pixel = point.y * WIDTH as i32 + point.x;
+
+        if pixel > (HEIGHT * WIDTH) as i32 {
+            return // Since we don't want to draw out of the window boundaries
+        } else {
+            self.buffer[((point.x) as u32 + (WIDTH as u32 * (point.y) as u32)) as usize] = colour;
+        }
+
     }
 
-    pub fn draw_rect(&mut self, point: Point, dimensions: Point, colour: u32) {
+    pub fn draw_rect(&mut self, top_right_point: Point, dimensions: Point, colour: u32) {
+        let offset_x = top_right_point.x;
+        let offset_y = top_right_point.y;
+        
         for length in 0..dimensions.x {
+
             for height in 0..dimensions.y {
-                self.colour_point(Point {x: length, y: height }, colour)
+                self.colour_point(Point::new(length + offset_x, height + offset_y), colour)
             }
         }
     
-    }
+    }   
 
 
     pub fn set_background(&mut self, colour: &u32) {
