@@ -1,4 +1,4 @@
-use minifb::{Key, Window, WindowOptions};
+use minifb::{Key, Window, WindowOptions, KeyRepeat};
 mod point;
 mod renderman;
 mod colour;
@@ -12,7 +12,7 @@ use crate::prelude::*;
 
 mod prelude {
     pub const WIDTH: usize= 1280;
-    pub const HEIGHT: usize = 720;
+    pub const HEIGHT: usize = 740;
 }
 
 
@@ -38,19 +38,59 @@ fn main() {
 
 
 
-    while window.is_open() && !window.is_key_down(Key::Escape) {
+   /*  while window.is_open() && !window.is_key_down(Key::Escape) {
 
         
         if window.is_key_down(Key::W) {
             engine.draw_rect(Point::new(offset_x, offset_y), Point::new(40, 40), colours.blue);
-            offset_x += 20;
-            offset_y += 20;
+            offset_x += 40;
+            offset_y += 40;
         } else if window.is_key_down(Key::B) {
             engine.set_background(&colours.green);
         }
 
         window.update_with_buffer(&engine.buffer, WIDTH, HEIGHT).unwrap()
+    } */
+
+    while window.is_open() && !window.is_key_down(Key::Escape) {
+        match window.get_keys_pressed(KeyRepeat::No) {
+            keys => {
+                for key in keys {
+                    match key {
+                        Key::W => {
+                            offset_y -= 40;
+                            engine.draw_rect(Point::new(offset_x, offset_y), Point::new(40, 40), colours.blue);
+                        }
+                        Key::A => {
+                            offset_x -= 40;
+                            engine.draw_rect(Point::new(offset_x, offset_y), Point::new(40, 40), colours.blue);
+                        }
+                        Key::S => {
+                            offset_y += 40;
+                            engine.draw_rect(Point::new(offset_x, offset_y), Point::new(40, 40), colours.blue);
+                        }
+                        Key::D => {
+                            offset_x += 40;
+                            engine.draw_rect(Point::new(offset_x, offset_y), Point::new(40, 40), colours.blue);
+                        }
+                        Key::G => {
+                            engine.set_background(&colours.green);
+                        }
+                        Key::R => {
+                            engine.set_background(&colours.red);
+                        }
+                        Key::B => {
+                            engine.set_background(&colours.blue);
+                        }
+                        _ => {}
+                    }
+                }
+            }
+        }
+        
+        window.update_with_buffer(&engine.buffer, WIDTH, HEIGHT).unwrap();
     }
+    
 }
 
 
