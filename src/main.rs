@@ -11,8 +11,8 @@ use crate::prelude::*;
 
 
 mod prelude {
-    pub const WIDTH: usize= 640;
-    pub const HEIGHT: usize = 360;
+    pub const WIDTH: usize= 1280;
+    pub const HEIGHT: usize = 720;
 }
 
 
