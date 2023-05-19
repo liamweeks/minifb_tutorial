@@ -40,21 +40,6 @@ fn main() {
 
 
 
-
-   /*  while window.is_open() && !window.is_key_down(Key::Escape) {
-
-        
-        if window.is_key_down(Key::W) {
-            engine.draw_rect(Point::new(offset_x, offset_y), Point::new(40, 40), colours.blue);
-            offset_x += 40;
-            offset_y += 40;
-        } else if window.is_key_down(Key::B) {
-            engine.set_background(&colours.green);
-        }
-
-        window.update_with_buffer(&engine.buffer, WIDTH, HEIGHT).unwrap()
-    } */
-
     while window.is_open() && !window.is_key_down(Key::Escape) {
         match window.get_keys_pressed(KeyRepeat::No) {
             keys => {
