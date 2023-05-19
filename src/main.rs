@@ -13,6 +13,9 @@ use crate::prelude::*;
 mod prelude {
     pub const WIDTH: usize= 1280;
     pub const HEIGHT: usize = 740;
+    pub use crate::colour::Colour;
+    pub use crate::renderman::RenderMan;
+    pub use crate::point::Point;
 }
 
 

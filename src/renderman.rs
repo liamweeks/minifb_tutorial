@@ -1,6 +1,5 @@
 use crate::prelude::*;
-use crate::point::Point;
-use crate::colour::Colour;
+
 
 pub struct RenderMan {
     pub buffer: Vec<u32>
@@ -20,7 +19,7 @@ impl RenderMan {
 
         let pixel = point.y * WIDTH as i32 + point.x;
 
-        if pixel > (HEIGHT * WIDTH) as i32 {
+        if pixel > (HEIGHT * WIDTH) as i32 || pixel < 0 {
             return // Since we don't want to draw out of the window boundaries
         } else {
             self.buffer[((point.x) as u32 + (WIDTH as u32 * (point.y) as u32)) as usize] = colour;
@@ -28,7 +27,7 @@ impl RenderMan {
 
     }
 
-    pub fn draw_rect(&mut self, top_right_point: Point, dimensions: Point, colour: u32) {
+    pub fn draw_rect(&mut self, top_right_point: Point, dimensions: Point, colour: u32  ) {
         let offset_x = top_right_point.x;
         let offset_y = top_right_point.y;
         
